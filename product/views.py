@@ -115,3 +115,7 @@ def product_restore(request, pk):
     product.is_deleted = False
     product.save()
     return Product.go_to_product_list()
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id, is_deleted=False)
+    return render(request, 'product/product_detail.html', {'product': product})

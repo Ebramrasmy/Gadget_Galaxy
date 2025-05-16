@@ -18,6 +18,7 @@
           <p><strong>Price:</strong> ${{ product.price }}</p>
 
           <a href="{% url 'product:product_update' product_id=product.id %}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="{% url 'product:product_detail' product.id %}" class="btn btn-info btn-sm">Details</a>
 
           <a href="{% url 'product:product_soft_delete' product_id=product.id %}"
              class="btn btn-danger btn-sm"

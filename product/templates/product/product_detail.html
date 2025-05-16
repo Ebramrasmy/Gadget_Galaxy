@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+        {% else %}
+          <img src="{% static 'images/placeholder.png' %}" class="img-fluid rounded" alt="No image">
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <h2>{{ product.name }}</h2>
+        <p class="text-muted">SKU: {{ product.sku }}</p>
+        <p><strong>Category:</strong> {{ product.category.name }}</p>
+        <p><strong>Description:</strong></p>
+        <p>{{ product.description }}</p>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p><strong>Stock:</strong> {{ product.stock }}</p>
+
+        <a href="{% url 'product:product_update' product.id %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'product:product_list' %}" class="btn btn-secondary">Back to List</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
