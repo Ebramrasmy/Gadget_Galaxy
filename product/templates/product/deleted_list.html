@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2 class="mb-4">Deleted Products</h2>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4 mb-4">
+        <div class="card border-danger">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title text-danger">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+            <a href="{% url 'product:product_hard_delete' product.id %}" class="btn btn-danger btn-sm"
+               onclick="return confirm('Are you sure to permanently delete this product?')">Hard Delete</a>
+            <a href="{% url 'product:product_restore' product.id %}" class="btn btn-success btn-sm">Restore</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No deleted products found.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

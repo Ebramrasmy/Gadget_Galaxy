@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Details</title>
+</head>
+<body>
+  <h1>{{ product.name }}</h1>
+  <img src="{{ product.image.url }}" alt="{{ product.name }}" width="200" />
+  <p>Description: {{ product.description }}</p>
+  <p>Price: {{ product.price }} USD</p>
+  <p>Stock: {{ product.stock }}</p>
+  <p>SKU: {{ product.sku }}</p>
+  <p>Category: {{ product.category.name }}</p>
+
+  <a href="{% url 'product_update' product.id %}">Edit</a>
+  <a href="{% url 'product_delete' product.id %}">Delete</a>
+  <br>
+  <a href="{% url 'product_list' %}">Back to List</a>
+</body>
+</html>

@@ -1,17 +1,26 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <h2>All Products</h2>
-  <ul>
+  <h2 class="mb-4">Available Products</h2>
+  <div class="row">
     {% for product in products %}
-      <li>
-        <strong>{{ product.name }}</strong><br>
-        Price: ${{ product.price }}<br>
-        Stock: {{ product.stock }}<br>
-        {{ product.description }}
-      </li>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          {% else %}
+            <img src="{% static 'images/img.jpg' %}" class="card-img-top" alt="No Image Available">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+          </div>
+        </div>
+      </div>
     {% empty %}
-      <li>No products available.</li>
+      <p>No products available.</p>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}

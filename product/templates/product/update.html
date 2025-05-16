@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Update Product</title>
+</head>
+<body>
+  <h1>Update Product</h1>
+  {% if errormsg %}
+    <p style="color:red;">{{ errormsg }}</p>
+  {% endif %}
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Name: <input type="text" name="name" value="{{ productobj.name }}" required></label><br />
+    <label>Description: <textarea name="description" required>{{ productobj.description }}</textarea></label><br />
+    <label>Price: <input type="number" name="price" step="0.01" value="{{ productobj.price }}" required></label><br />
+    <label>Stock: <input type="number" name="stock" value="{{ productobj.stock }}" required></label><br />
+    <label>SKU: <input type="text" name="sku" value="{{ productobj.sku }}" required></label><br />
+    <label>Category:
+      <select name="category" required>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if cat.id == productobj.category.id %}selected{% endif %}>{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+    </label><br />
+    <button type="submit">Update Product</button>
+  </form>
+  <br />
+  <a href="{% url 'product_list' %}">Back to List</a>
+</body>
+</html>
