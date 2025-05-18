@@ -129,7 +129,7 @@ def product_createf(request):
         form=ProductForm(data=request.POST,files=request.FILES)
         if form.is_bound and form.is_valid():
             form.save()
-            return redirect('product:product_list')
+            return redirect('product:product_listc')
         else:
             context['msg']=form.errors
             context['form']=form
@@ -163,11 +163,33 @@ def product_updatef(request, id):
             old_product.image = form.cleaned_data['image']
             old_product.category = form.cleaned_data['category']
             old_product.save()
-            return redirect('product:product_list')
+            return redirect('product:product_listc')
         else:
             context['msg'] = form.errors
 
     return render(request, 'product/product_updateform.html', context)
 
 
+##################################list using class based view############################
 
+from django.views.generic import ListView
+from .models import Product
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product/product_listc.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(is_deleted=False)
+
+
+####################################delete using class based view###################################33333
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from .models import Product
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'product/product_confirm_delete.html'
+    success_url = reverse_lazy('product:product_list')
