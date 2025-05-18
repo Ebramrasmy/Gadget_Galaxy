@@ -12,5 +12,7 @@ urlpatterns = [
     path('hdelete/<int:product_id>/', product_hard_delete, name='product_hard_delete'),
     path('deleted/', deleted_products, name='deleted_products'),
     path('restore/<int:pk>/', product_restore, name='product_restore'),
+    path('newf/', product_createf, name='product_createf'),
+    path('updatef/<int:id>/', product_updatef, name='product_updatef'),
 
 ]

@@ -119,3 +119,55 @@ def product_restore(request, pk):
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id, is_deleted=False)
     return render(request, 'product/product_detail.html', {'product': product})
+
+
+
+#######################insert using model form######################
+def product_createf(request):
+    context={'form':ProductForm()}
+    if(request.method=='POST'):
+        form=ProductForm(data=request.POST,files=request.FILES)
+        if form.is_bound and form.is_valid():
+            form.save()
+            return redirect('product:product_list')
+        else:
+            context['msg']=form.errors
+            context['form']=form
+
+    return render(request, 'product/product_form.html', context)
+
+
+
+#######################update using form######################
+
+from .forms import ProductForm
+
+def product_updatef(request, id):
+    old_product = Product.objects.get(pk=id)
+    initial_data = {
+        'name': old_product.name,
+        'price': old_product.price,
+        'description': old_product.description,
+        'image': old_product.image,
+        'category': old_product.category.id
+    }
+
+    context = {'form': ProductForm(initial=initial_data)}
+
+    if request.method == 'POST':
+        form = ProductForm(data=request.POST, files=request.FILES, initial=initial_data)
+        if form.is_valid():
+            old_product.name = form.cleaned_data['name']
+            old_product.price = form.cleaned_data['price']
+            old_product.description = form.cleaned_data['description']
+            old_product.image = form.cleaned_data['image']
+            old_product.category = form.cleaned_data['category']
+            old_product.save()
+            return redirect('product:product_list')
+        else:
+            context['msg'] = form.errors
+
+    return render(request, 'product/product_updateform.html', context)
+
+
+

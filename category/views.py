@@ -52,3 +52,10 @@ def category_restore(request, category_id):
     category.is_deleted = False
     category.save()
     return redirect('category:deleted_categories')
+
+
+
+
+
+
+
