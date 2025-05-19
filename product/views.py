@@ -163,7 +163,7 @@ def product_updatef(request, id):
             old_product.image = form.cleaned_data['image']
             old_product.category = form.cleaned_data['category']
             old_product.save()
-            return redirect('product:product_listc')
+            return redirect('product:product_list')
         else:
             context['msg'] = form.errors
 
@@ -177,7 +177,7 @@ from .models import Product
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'product/product_listc.html'
+    template_name = 'product/product_list.html'
     context_object_name = 'products'
 
     def get_queryset(self):
