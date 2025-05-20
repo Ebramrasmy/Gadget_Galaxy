@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h2>Category List</h2>
+
 <a href="{% url 'category:category_new' %}" class="btn btn-primary mb-3">Add New Category</a>
 
 <table class="table table-bordered">
@@ -12,18 +14,20 @@
     </tr>
   </thead>
   <tbody>
-    {% for category in categories %}
-    <tr>
-      <td>{{ category.name }}</td>
-      <td>{{ category.description }}</td>
-      <td>
-        <a href="{% url 'category:category_update' category.id %}" class="btn btn-warning btn-sm">Edit</a>
-        <a href="{% url 'category:category_soft_delete' category.id %}" class="btn btn-danger btn-sm"
-          onclick="return confirm('Delete this category?');">Delete</a>
-      </td>
-    </tr>
+    {% for category in object_list %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>
+          <a href="{% url 'category:category_update' category.id %}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="{% url 'category:category_delete' category.id %}" class="btn btn-danger btn-sm"
+             onclick="return confirm('Delete this category?');">Delete</a>
+        </td>
+      </tr>
     {% empty %}
-    <tr><td colspan="3">No categories found.</td></tr>
+      <tr>
+        <td colspan="3">No categories found.</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>

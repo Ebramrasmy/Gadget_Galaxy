@@ -1,22 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{% if is_update %}Update{% else %}New{% endif %} Category</h2>
+  <h2>{% if view.object.pk %}Update{% else %}New{% endif %} Category</h2>
 
-{% if errormsg %}
-<div class="alert alert-danger">{{ errormsg }}</div>
-{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-<form method="post">
-  {% csrf_token %}
-  <div class="mb-3">
-    <label class="form-label">Name:</label>
-    <input type="text" name="name" class="form-control" value="{{ category.name|default:'' }}">
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Description:</label>
-    <textarea name="description" class="form-control">{{ category.description|default:'' }}</textarea>
-  </div>
-  <button type="submit" class="btn btn-success">{% if is_update %}Update{% else %}Add{% endif %}</button>
-  <a href="{% url 'category:category_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+    <button type="submit" class="btn btn-success">
+      {% if view.object.pk %}Update{% else %}Add{% endif %}
+    </button>
+
+    <a href="{% url 'category:category_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
 {% endblock %}
+
