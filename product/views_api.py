@@ -22,6 +22,7 @@ def product_list_api(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+######## add & list product endpoint using function based view ########
 
 
 class ProductUpdateView(APIView):
@@ -40,3 +41,31 @@ class ProductUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+######## update,getbyid,delete product using generic ########
+from rest_framework import generics, status
+from rest_framework.response import Response
+from .models import Product
+from .serializers import ProductSerializer
+
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    queryset = Product.objects.filter(is_deleted=False)
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    queryset = Product.objects.filter(is_deleted=False)
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+class ProductDeleteAPIView(generics.DestroyAPIView):
+    queryset = Product.objects.filter(is_deleted=False)
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def delete(self, request, *args, **kwargs):
+        product = self.get_object()
+        product.is_deleted = True
+        product.save()
+        return Response({'message': 'Product soft deleted'}, status=status.HTTP_204_NO_CONTENT)

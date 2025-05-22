@@ -1,11 +1,17 @@
 from django.urls import path
 from .views import *
 from .views_api import *
+
 app_name = 'product'
 
 urlpatterns = [
     path('api/products/', product_list_api, name='product_list_api'),
     path('api/products/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update_api'),
+    path('api/products/<int:pk>/', ProductDetailAPIView.as_view(), name='product_detail_api'),
+    path('api/products/update/<int:pk>/', ProductUpdateAPIView.as_view(), name='product_update_api'),
+    path('api/products/<int:pk>/delete/', ProductDeleteAPIView.as_view(), name='product_delete_api'),
+
+
 
 
     path('', product_list, name='product_list'),
