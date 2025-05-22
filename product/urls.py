@@ -1,8 +1,13 @@
-from django.urls import path
+from django.urls import path ,include
 from .views import *
 from .views_api import *
+from rest_framework.routers import DefaultRouter
 
 app_name = 'product'
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet, basename='product')
+
 
 urlpatterns = [
     path('api/products/', product_list_api, name='product_list_api'),
@@ -10,8 +15,7 @@ urlpatterns = [
     path('api/products/<int:pk>/', ProductDetailAPIView.as_view(), name='product_detail_api'),
     path('api/products/update/<int:pk>/', ProductUpdateAPIView.as_view(), name='product_update_api'),
     path('api/products/<int:pk>/delete/', ProductDeleteAPIView.as_view(), name='product_delete_api'),
-
-
+    path('api/', include(router.urls)),
 
 
     path('', product_list, name='product_list'),

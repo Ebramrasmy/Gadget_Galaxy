@@ -69,3 +69,11 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
         product.is_deleted = True
         product.save()
         return Response({'message': 'Product soft deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
+######## product crud using View Set ########
+from rest_framework import viewsets
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.filter(is_deleted=False)
+    serializer_class = ProductSerializer
