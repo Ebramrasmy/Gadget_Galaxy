@@ -1,13 +1,16 @@
 from django.urls import path
 from .views import *
-
+from .views_api import *
 app_name = 'product'
 
 urlpatterns = [
+    path('api/products/', product_list_api, name='product_list_api'),
+
+
     path('', product_list, name='product_list'),
     path('New/', product_new, name='product_new'),
     path('Update/<int:product_id>/', product_update, name='product_update'),
-    path('<int:product_id>/', product_detail, name='product_detail'),  # ← المهم ده
+    path('<int:product_id>/', product_detail, name='product_detail'),
     path('sdelete/<int:product_id>/', product_soft_delete, name='product_soft_delete'),
     path('hdelete/<int:product_id>/', product_hard_delete, name='product_hard_delete'),
     path('deleted/', deleted_products, name='deleted_products'),

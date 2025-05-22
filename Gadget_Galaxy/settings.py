@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'category.apps.CategoryConfig',
     'product.apps.ProductConfig',
+    'accounts.apps.AccountsConfig',
+    'rest_framework',
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -132,4 +135,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'category:category_list'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+AUTH_USER_MODEL = 'accounts.CustomUser'
