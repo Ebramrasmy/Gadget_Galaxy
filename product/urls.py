@@ -5,6 +5,7 @@ app_name = 'product'
 
 urlpatterns = [
     path('api/products/', product_list_api, name='product_list_api'),
+    path('api/products/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update_api'),
 
 
     path('', product_list, name='product_list'),
