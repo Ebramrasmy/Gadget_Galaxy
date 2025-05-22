@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 @api_view(['GET', 'POST'])
 def product_list_api(request):
     if request.method == 'GET':
-        products = Product.objects.all()
+        products = Product.objects.filter(is_deleted=False)
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
